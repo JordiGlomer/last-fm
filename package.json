@@ -1,0 +1,24 @@
+{
+    "name": "last-fm",
+    "version": "1.0.0",
+    "description": "Generar un fake de la web  **[last.fm](https://www.last.fm/home)**, web de playlists de canciones. El resultado se deberá parecer al que se muestra a continuación:",
+    "main": "script.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JordiGlomer/last-fm.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/JordiGlomer/last-fm/issues"
+    },
+    "homepage": "https://github.com/JordiGlomer/last-fm#readme",
+    "dependencies": {
+
+    }
+}

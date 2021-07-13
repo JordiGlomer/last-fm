@@ -8,58 +8,102 @@ class Song {
     }
 
     setItemLi() {
+            let li = document.createElement('li');
+            li.classList.add('far', 'fa-play-circle');
+            return li;
 
+        }
+        // setItemOl() {
+        //     let ol = document.createElement('ol');
+        //     ol.classList.add('numeracion');
+        //     return ol;
+        // }
+    setItemGroupName(group, url) {
+        let banda = document.createElement('a');
+        banda.classList.add('group-name');
+        banda.setAttribute('title', 'Ir al grupo');
+        banda.setAttribute('href', url);
+        let content = document.createTextNode(group);
+        banda.appendChild(content);
+        return banda;
     }
-    setItemGroupName() {
-
+    setItemSongTitle(title) {
+        let tema = document.createElement('a');
+        tema.classList.add('song-title');
+        let content = document.createTextNode(title);
+        tema.appendChild(content);
+        return tema;
     }
-    setItemSongTitle() {
-
+    setListeners(listeners) {
+        let oientes = document.createElement('div');
+        let span = document.createElement('span');
+        oientes.classList.add('listeners');
+        let content = document.createTextNode(listeners);
+        let info = document.createTextNode(' listeners');
+        oientes.appendChild(content);
+        // span.appendChild(info);
+        oientes.appendChild(span);
+        return oientes;
     }
-    setListeners() {
+    getNewElement(group, url, title, listeners) {
+        let itemLi = this.setItemLi();
+        let itemGrupo = this.setItemGroupName(group, url);
+        let itemTema = this.setItemSongTitle(title);
+        let itemOientes = this.setListeners(listeners);
 
-    }
-    getNewElement() {
+        // let span = document.createElement('span');
+        // span.classList.add('numbers');
+        // itemLi.appendChild(span);
 
+        itemLi.appendChild(itemGrupo);
+        itemLi.appendChild(itemTema);
+        itemLi.appendChild(itemOientes);
+        return itemLi;
     }
 }
-
+let songs = [];
 
 const loadGenre = (e) => {
     changeFocus(e);
-    let temp = [];
+    let garage = [];
     songs.forEach((i) => {
         if (i.genre.toLowerCase() == e.path[0].innerHTML.toLowerCase()) {
-            temp.push(i);
+            garage.push(i);
         }
     });
-    console.log(temp);
-    loadSongs(temp);
+    console.log(garage);
+    loadSongs(garage);
 };
 
 const loadSongs = (lista) => {
+    let div = document.querySelector(".lista");
+    div.innerHTML = "";
+    for (const obj of lista) {
+        let li = obj.getNewElement(obj.group, obj.url, obj.title, obj.listeners);
+        div.appendChild(li);
+    }
 
 };
-
 
 
 const loadTenListened = (e) => {
 
     changeFocus(e);
 
-    let temp = [];
-    temp = [...songs];
-    temp.sort((a, b) => {
-        if (a.listeners > b.listeners) {
+    let garage = [];
+    garage = [...songs];
+    garage.sort((a, b) => {
+        if (a.listeners < b.listeners) {
             return 1;
         }
-        if (a.listeners < b.listeners) {
+        if (a.listeners > b.listeners) {
             return -1;
         }
         return 0;
     });
-    temp.length = 10;
-    loadSongs(temp);
+    garage.length = 10;
+    loadSongs(garage);
+    console.log("top 10");
 };
 
 const loadOverview = () => {
@@ -68,63 +112,88 @@ const loadOverview = () => {
     document.querySelector(".menu-item-selected").innerHTML = overview.innerHTML;
 
     loadSongs(songs);
+    console.log("overview");
 };
 
 const loadBiggest = (e) => {
-
+    // document.querySelector('.menu-item-selected').innerHTML = "The Biggest";
     changeFocus(e);
 
-    let artistas = [];
+    let cracks = [];
     let add = true;
-    let temp = [];
+    let garage = [];
 
     songs.map((e) => {
         add = true;
-        artistas.forEach((i) => {
-
+        cracks.forEach((i) => {
             if (i.group == e.group) {
                 i.listeners = parseInt(i.listeners) + parseInt(e.listeners);
                 add = false;
             }
         });
         if (add) {
-
-            artistas.push(new Song(e.group, e.url, e.title, e.listeners));
+            cracks.push(new Song(e.group, e.url, e.title, e.listeners));
         }
+
     });
 
-    artistas.sort((a, b) => {
+    cracks.sort((a, b) => {
         if (a.listeners < b.listeners) {
-            return 1;
+            return -1;
         }
         if (a.listeners > b.listeners) {
-            return -1;
+            return 1;
         }
         return 0;
     });
-
     songs.map((e) => {
-        if (e.group == artistas[0].group) {
-            temp.push(e);
+        if (e.group == cracks[0].group) {
+            garage.push(e);
         }
     });
-    loadSongs(temp);
-
-
+    loadSongs(garage);
+    console.log("biggest");
 };
+// const loadSongsByGenre = (e) => {
+//     let genreSelected = e.currentTarget.dataset.genre;
+//     document.querySelector('.menu-item-selected').innerHTML = genreSelected;
+//     let newArrayFilterByGenre = songs.filter(genero => genero.genre === genreSelected);
+//     loadSongs(newArrayFilterByGenre);
+// };
+// const urlFetch = async() => {
+//     try {
+
+//         let response = await (fetch('./music.json'));
+//         if (response.ok) {
+//             let responseData = await response.json();
+//             for (const obj of responseData) {
+//                 let constructorObject = { genre: obj.genre ? obj.genre : null, group: obj.artist.name ? obj.artist.name : null, listeners: obj.listeners ? obj.listeners : null, title: obj.name ? obj.name : null, url: obj.artist.url ? obj.artist.url : null, };
+//                 songs.push(new Song(constructorObject));
+//             }
+
+//         } else {
+//             throw `error! status: ${response.status}`;
+//         }
+//     } catch (err) {
+//         throw `HTTP error! status: ${err}`;
+//     }
+// };
+
 
 const init = () => {
+
     fetch("./music.json")
         .then(data => data.json())
         .then(json => {
             json.forEach(i => {
-                loadSongs.push(new Song(i.artist.name, i.artist.url, i.name, i.listeners, i.genre));
-
+                songs.push(new Song(i.artist.name, i.artist.url, i.name, i.listeners, i.genre));
             });
-            console.log("fetch...?");
-
+            loadOverview();
+            console.log('fetch');
         });
+
     document.querySelector('[href="#Overview"]').addEventListener("click", loadOverview);
+    // urlFetch();
     document.querySelector('[href="#Top10Listened"]').addEventListener("click", loadTenListened);
     document.querySelector('[href="#Thebiggest"]').addEventListener("click", loadBiggest);
     document.querySelector('[href="#rock"]').addEventListener("click", loadGenre);
@@ -132,14 +201,15 @@ const init = () => {
     document.querySelector('[href="#indie"]').addEventListener("click", loadGenre);
     document.querySelector('[href="#jazz"]').addEventListener("click", loadGenre);
     document.querySelector('[href="#reggae"]').addEventListener("click", loadGenre);
-    //document.querySelector('./music.json').addEventListener('click', loadSongs);
+    // document.querySelector('./music.json').addEventListener('click', loadSongs);
+    // document.querySelectorAll('.list-genero>li>a').forEach(ele => { ele.addEventListener('click', loadSongsByGenre); });
 
 };
 
 
 window.onload = init;
 
-loadOverview();
+// loadOverview();
 
 function changeFocus(e) {
     e.path[0].focus();

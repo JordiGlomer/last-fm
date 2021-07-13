@@ -128,11 +128,15 @@ li>a.group-name {
 
 .lista>li {
     padding: 10px;
-    counter-reset: initial;
+    counter-increment: step-counter;
 }
 
+
+/* ol {
+    list-style: none;
+} */
+
 .lista>li:before {
-    counter-increment: 1;
     content: " "counter(step-counter)". ";
     font-size: 20px;
 }

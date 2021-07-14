@@ -85,11 +85,11 @@ const loadTenListened = (e) => {
     let garage = [];
     garage = [...songs];
     garage.sort((a, b) => {
-        if (a.listeners < b.listeners) {
-            return 1;
-        }
         if (a.listeners > b.listeners) {
             return -1;
+        }
+        if (a.listeners < b.listeners) {
+            return 1;
         }
         return 0;
     });

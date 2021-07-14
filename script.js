@@ -8,16 +8,12 @@ class Song {
     }
 
     setItemLi() {
-            let li = document.createElement('li');
-            li.classList.add('far', 'fa-play-circle');
-            return li;
+        let li = document.createElement('li');
+        li.classList.add('far', 'fa-play-circle');
+        return li;
 
-        }
-        // setItemOl() {
-        //     let ol = document.createElement('ol');
-        //     ol.classList.add('numeracion');
-        //     return ol;
-        // }
+    }
+
     setItemGroupName(group, url) {
         let banda = document.createElement('a');
         banda.classList.add('group-name');
@@ -41,7 +37,6 @@ class Song {
         let content = document.createTextNode(listeners);
         let info = document.createTextNode(' listeners');
         oientes.appendChild(content);
-        // span.appendChild(info);
         oientes.appendChild(span);
         return oientes;
     }
@@ -51,13 +46,10 @@ class Song {
         let itemTema = this.setItemSongTitle(title);
         let itemOientes = this.setListeners(listeners);
 
-        // let span = document.createElement('span');
-        // span.classList.add('numbers');
-        // itemLi.appendChild(span);
-
         itemLi.appendChild(itemGrupo);
         itemLi.appendChild(itemTema);
         itemLi.appendChild(itemOientes);
+
         return itemLi;
     }
 }
@@ -116,7 +108,7 @@ const loadOverview = () => {
 };
 
 const loadBiggest = (e) => {
-    // document.querySelector('.menu-item-selected').innerHTML = "The Biggest";
+
     changeFocus(e);
 
     let cracks = [];
@@ -154,30 +146,6 @@ const loadBiggest = (e) => {
     loadSongs(garage);
     console.log("biggest");
 };
-// const loadSongsByGenre = (e) => {
-//     let genreSelected = e.currentTarget.dataset.genre;
-//     document.querySelector('.menu-item-selected').innerHTML = genreSelected;
-//     let newArrayFilterByGenre = songs.filter(genero => genero.genre === genreSelected);
-//     loadSongs(newArrayFilterByGenre);
-// };
-// const urlFetch = async() => {
-//     try {
-
-//         let response = await (fetch('./music.json'));
-//         if (response.ok) {
-//             let responseData = await response.json();
-//             for (const obj of responseData) {
-//                 let constructorObject = { genre: obj.genre ? obj.genre : null, group: obj.artist.name ? obj.artist.name : null, listeners: obj.listeners ? obj.listeners : null, title: obj.name ? obj.name : null, url: obj.artist.url ? obj.artist.url : null, };
-//                 songs.push(new Song(constructorObject));
-//             }
-
-//         } else {
-//             throw `error! status: ${response.status}`;
-//         }
-//     } catch (err) {
-//         throw `HTTP error! status: ${err}`;
-//     }
-// };
 
 
 const init = () => {
@@ -193,7 +161,6 @@ const init = () => {
         });
 
     document.querySelector('[href="#Overview"]').addEventListener("click", loadOverview);
-    // urlFetch();
     document.querySelector('[href="#Top10Listened"]').addEventListener("click", loadTenListened);
     document.querySelector('[href="#Thebiggest"]').addEventListener("click", loadBiggest);
     document.querySelector('[href="#rock"]').addEventListener("click", loadGenre);
@@ -201,15 +168,13 @@ const init = () => {
     document.querySelector('[href="#indie"]').addEventListener("click", loadGenre);
     document.querySelector('[href="#jazz"]').addEventListener("click", loadGenre);
     document.querySelector('[href="#reggae"]').addEventListener("click", loadGenre);
-    // document.querySelector('./music.json').addEventListener('click', loadSongs);
-    // document.querySelectorAll('.list-genero>li>a').forEach(ele => { ele.addEventListener('click', loadSongsByGenre); });
+
 
 };
 
 
 window.onload = init;
 
-// loadOverview();
 
 function changeFocus(e) {
     e.path[0].focus();

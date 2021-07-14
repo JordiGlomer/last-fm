@@ -56,7 +56,7 @@ class Song {
 let songs = [];
 
 const loadGenre = (e) => {
-   // changeFocus(e);
+    changeFocus(e);
     let garage = [];
     songs.forEach((i) => {
         if (i.genre.toLowerCase() == e.path[0].innerHTML.toLowerCase()) {
@@ -80,7 +80,7 @@ const loadSongs = (lista) => {
 
 const loadTenListened = (e) => {
 
-   // changeFocus(e);
+    changeFocus(e);
 
     let garage = [];
     garage = [...songs];
@@ -109,7 +109,7 @@ const loadOverview = () => {
 
 const loadBiggest = (e) => {
 
-   // changeFocus(e);
+    changeFocus(e);
 
     let cracks = [];
     let add = true;
